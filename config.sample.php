@@ -1,26 +1,26 @@
 <?php
 
 /**
-*  
+*
 *  This is just a simple config file to store your web root and a few other items
-*  
-*  Change "/www/sites/*" to the directory where you keep your sites. 
+*
+*  Change "/www/sites/*" to the directory where you keep your sites.
 *  Add multiple directories like this:
-*  
+*
 *  $dir = array("/www/sites1/*","/www/sites2/*");
-*  
+*
 */
 
 
 /** directory name(s) */
 $dir = array("/Users/username/Sites/*");
-					
+
 /** Your local top level domain */
 $tld = 'dev';
 
 /*
 *
-*  Icon file names you would like to display next to the link to each site. 
+*  Icon file names you would like to display next to the link to each site.
 *  In order of the priority they should be used.
 *
 */
@@ -36,6 +36,7 @@ $devtools = array(
 //	array( 'name' => 'Tool', 'url' => 'http://example.com/' ),
 	array( 'name' => 'Web Host Admin', 'url' => 'http://example.com/' ),
 	array( 'name' => 'Github', 'url' => 'http://github.com/' ),
+	array( 'name' => 'phpinfo', 'url' => 'phpinfo.php' ),
 	);
 
 /*
@@ -51,7 +52,7 @@ $devtools = array(
 *
 *  'sitedir' => array( 'displayname' => 'Display Name', 'adminurl' => 'http://example.sites.dev/admin' ),
 *
-*/			
+*/
 $siteoptions = array(
 //  'dirname' => 'Display Name',
 //	'dirname' => array( 'displayname' => 'DisplayName', 'adminurl' => 'http://something/admin' ),
@@ -61,8 +62,8 @@ $siteoptions = array(
 /*
 *
 *  Directory names of sites you want to hide from the page. If you're using multiple directories
-*  in $dir be aware that any directory names in the array below that show up in any of 
+*  in $dir be aware that any directory names in the array below that show up in any of
 *  your directories will be hidden.
-* 
+*
 */
 $hiddensites = array( 'home', );
