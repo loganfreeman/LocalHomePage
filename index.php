@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 
-<?php require('config.php'); ?>
+<?php
+if(file_exists('config.php')){
+  require('config.php');
+}
+?>
 
 <html>
     <head>
