@@ -17,7 +17,6 @@
 
 		    <header>
 
-			    <h1>My Local Sites</h1>
 
 			    <nav>
 			        <ul>
@@ -31,6 +30,11 @@
 
 		    </header>
 
+
+
+<?php if (getenv("SHOW_LOCAL_SITES") !== false): ?>
+
+        <h2>My Local Sites</h2>
 		    <content class="cf">
 <?php
 		    foreach ( $dir as $d ) {
@@ -96,6 +100,59 @@
 		   	} // foreach ( $dir as $d )
 ?>
 			</content>
+
+<?php endif ?>
+
+<h2>Bootstrap template</h2>
+      <content class="cf">
+<?php
+      foreach ( $template_dir as $d ) {
+        $dirsplit = explode('/', $d);
+        $dirname = $dirsplit[count($dirsplit)-2];
+
+      printf( '<ul class="sites %1$s">', $dirname );
+
+          foreach( glob( $d ) as $file )  {
+
+            $project = basename($file);
+
+            if ( in_array( $project, $hiddensites ) ) continue;
+
+              echo '<li>';
+
+              $siteroot = sprintf( 'http://%1$s/%2$s/%3$s', $_SERVER['HTTP_HOST'], $dirname, $project );
+
+              // Display an icon for the site
+              $icon_output = '<span class="no-img"></span>';
+              foreach( $icons as $icon ) {
+
+                if ( file_exists( $file . '/' . $icon ) ) {
+                  $icon_output = sprintf( '<img src="%1$s/%2$s">', $siteroot, $icon );
+                  break;
+                } // if ( file_exists( $file . '/' . $icon ) )
+
+              } // foreach( $icons as $icon )
+              echo $icon_output;
+
+              // Display a link to the site
+              $displayname = $project;
+              if ( array_key_exists( $project, $siteoptions ) ) {
+                if ( is_array( $siteoptions[$project] ) )
+                  $displayname = array_key_exists( 'displayname', $siteoptions[$project] ) ? $siteoptions[$project]['displayname'] : $project;
+                else
+                  $displayname = $siteoptions[$project];
+              }
+              printf( '<a class="site" href="%1$s">%2$s</a>', $siteroot, $displayname );
+
+              echo '</li>';
+
+      } // foreach( glob( $d ) as $file )
+
+          echo '</ul>';
+
+      } // foreach ( $dir as $d )
+?>
+    </content>
 
 
 
