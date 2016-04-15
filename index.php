@@ -4,6 +4,8 @@
 if(file_exists('config.php')){
   require('config.php');
 }
+$template_dir = array(getcwd() . "/template/*");
+
 ?>
 
 <html>
