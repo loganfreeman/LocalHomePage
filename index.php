@@ -109,6 +109,35 @@ $template_dir = array(getcwd() . "/template/*");
 
 <?php endif ?>
 
+<h2>Virtual Hosts</h2>
+<content class="cf">
+<?php
+
+$lines = file('/etc/hosts');
+
+$vhost_entries = array_filter($lines, function($line) {
+  $parts = preg_split('/\s+/', $line);
+  return count($parts) >= 2 && substr( $parts[1], 0, 4 ) == "www.";
+});
+
+printf( '<ul class="sites %1$s">', 'vhosts');
+
+foreach ( $vhost_entries as $vhost_entry ) {
+
+$host_name = preg_split('/\s+/', $vhost_entry)[1];
+
+$host_url = sprintf( 'http://%1$s', $host_name );
+
+echo '<li>';
+printf( '<a class="site" href="%1$s">%2$s</a>', $host_url, explode(".", $host_name)[1] );
+
+echo '</li>';
+}
+echo '</ul>';
+?>
+</content>
+
+
 <h2>Bootstrap template</h2>
       <content class="cf">
 <?php
