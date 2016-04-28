@@ -109,33 +109,35 @@ $template_dir = array(getcwd() . "/template/*");
 
 <?php endif ?>
 
-<h2>Virtual Hosts</h2>
-<content class="cf">
+
+
 <?php
+$hosts_file = '/etc/hosts';
+if (is_readable($hosts_file)) {
+  $lines = file($hosts_file);
 
-$lines = file('/etc/hosts');
+  $vhost_entries = array_filter($lines, function($line) {
+    $parts = preg_split('/\s+/', $line);
+    return count($parts) >= 2 && substr( $parts[1], 0, 4 ) == "www.";
+  });
 
-$vhost_entries = array_filter($lines, function($line) {
-  $parts = preg_split('/\s+/', $line);
-  return count($parts) >= 2 && substr( $parts[1], 0, 4 ) == "www.";
-});
+  printf( '<h2>Virtual Hosts</h2><content class="cf"><ul class="sites %1$s">', 'vhosts');
 
-printf( '<ul class="sites %1$s">', 'vhosts');
+  foreach ( $vhost_entries as $vhost_entry ) {
 
-foreach ( $vhost_entries as $vhost_entry ) {
+  $host_name = preg_split('/\s+/', $vhost_entry)[1];
 
-$host_name = preg_split('/\s+/', $vhost_entry)[1];
+  $host_url = sprintf( 'http://%1$s', $host_name );
 
-$host_url = sprintf( 'http://%1$s', $host_name );
+  echo '<li>';
+  printf( '<a class="site" href="%1$s">%2$s</a>', $host_url, explode(".", $host_name)[1] );
 
-echo '<li>';
-printf( '<a class="site" href="%1$s">%2$s</a>', $host_url, explode(".", $host_name)[1] );
-
-echo '</li>';
-}
-echo '</ul>';
+  echo '</li>';
+  }
+  echo '</ul></content>';
+} 
 ?>
-</content>
+
 
 
 <h2>Bootstrap template</h2>
