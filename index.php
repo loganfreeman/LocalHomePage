@@ -47,6 +47,10 @@ $template_dir = array(getcwd() . "/template/*");
 			    $dirsplit = explode('/', $d);
 			    $dirname = $dirsplit[count($dirsplit)-2];
 
+          if(isset($ignored) && in_array($dirname, $ignored)) {
+            continue;
+          }
+
 				printf( '<ul class="sites %1$s">', $dirname );
 
 		        foreach( glob( $d ) as $file )  {
