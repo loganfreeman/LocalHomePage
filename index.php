@@ -47,10 +47,6 @@ $template_dir = array(getcwd() . "/template/*");
 			    $dirsplit = explode('/', $d);
 			    $dirname = $dirsplit[count($dirsplit)-2];
 
-          if(isset($ignored) && in_array($dirname, $ignored)) {
-            continue;
-          }
-
 				printf( '<ul class="sites %1$s">', $dirname );
 
 		        foreach( glob( $d ) as $file )  {
@@ -58,6 +54,10 @@ $template_dir = array(getcwd() . "/template/*");
 		        	$project = basename($file);
 
 		        	if ( in_array( $project, $hiddensites ) ) continue;
+
+              if(isset($ignored) && in_array($project, $ignored)) {
+                continue;
+              }
 
 		            echo '<li>';
 
@@ -139,7 +139,7 @@ if (is_readable($hosts_file)) {
   echo '</li>';
   }
   echo '</ul></content>';
-} 
+}
 ?>
 
 
