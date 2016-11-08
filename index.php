@@ -122,7 +122,7 @@ if (is_readable($hosts_file)) {
 
   $vhost_entries = array_filter($lines, function($line) {
     $parts = preg_split('/\s+/', $line);
-    return count($parts) >= 2 && substr( $parts[1], 0, 4 ) == "www.";
+    return count($parts) >= 2 && (substr( $parts[1], 0, 4 ) == "www." || substr( $parts[1], -6 ) == ".local" );
   });
 
   printf( '<h2>Virtual Hosts</h2><content class="cf"><ul class="sites %1$s">', 'vhosts');
@@ -134,7 +134,7 @@ if (is_readable($hosts_file)) {
   $host_url = sprintf( 'http://%1$s', $host_name );
 
   echo '<li>';
-  printf( '<a class="site" href="%1$s">%2$s</a>', $host_url, explode(".", $host_name)[1] );
+  printf( '<a class="site" href="%1$s">%2$s</a>', $host_url, $host_name );
 
   echo '</li>';
   }
